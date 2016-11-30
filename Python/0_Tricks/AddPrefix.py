@@ -1,10 +1,8 @@
 import os
 
-print("Please specify the folder in which files exists:")
-workDir=input()
+workDir=input("Please specify the folder in which files exists:\n")
+prefix=input("Please input the prefix:")
 
-print("Please input the prefix:")
-prefix=input()
 fileLists=os.listdir(workDir)
 
 for files in fileLists:
