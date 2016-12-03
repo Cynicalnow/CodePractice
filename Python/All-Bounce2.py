@@ -1,16 +1,14 @@
 #-------------------------------------------------------------------------------
-# Name:        module1
+# Name: module1
 # Purpose:
 #
-# Author:      Avinash
+# Author: Avinash
 #
-# Created:     01/05/2014
-# Copyright:   (c) Avinash 2014
-# Licence:     <your licence>
+# Created: 01/05/2014
+# Copyright: (c) Avinash 2014
+# Licence: <your licence>
 #-------------------------------------------------------------------------------
-
-
-from Tkinter import *
+from tkinter import *
 import random
 import time
 import sys
@@ -36,9 +34,7 @@ canvas.create_rectangle(0,0,535,400, fill = "black")
 canvas.update()
 
 class Ball:
-
     def __init__(self,canvas,paddle,block,color):
-
         self.canvas = canvas
         self.paddle = paddle
         self.block = block
@@ -52,11 +48,12 @@ class Ball:
         self.canvas_width = self.canvas.winfo_width()
         self.hit_bottom = False
         #self.canvas.create_text( 470, 10, text = "0", anchor = NE, font = ("Courier", 28))
+        
     def score(self):
         global counter
         counter += 1
         tk.title("Bounce! Score = " + str(counter))
-
+        
     def hit_block(self,pos):
         try:
             block_pos = self.canvas.coords(self.block.id)
@@ -71,8 +68,6 @@ class Ball:
             return False
         except:
             return False
-
-
     def hit_block1(self,pos):
         try:
             block_pos1 = self.canvas.coords(self.block.id1)
@@ -84,12 +79,10 @@ class Ball:
                         global b
                         b += 1
                         return True
-
             return False
         except:
             return False
-
-
+        
     def hit_block2(self,pos):
         try:
             block_pos2 = self.canvas.coords(self.block.id2)
@@ -104,8 +97,7 @@ class Ball:
             return False
         except:
             return False
-
-
+        
     def hit_block3(self,pos):
         try:
             block_pos3 = self.canvas.coords(self.block.id3)
@@ -120,8 +112,7 @@ class Ball:
             return False
         except:
             return False
-
-
+    
     def hit_block4(self,pos):
         try:
             block_pos4 = self.canvas.coords(self.block.id4)
@@ -133,30 +124,28 @@ class Ball:
                         global e
                         e += 1
                         return True
-
             return False
         except:
             return False
-
+        
     def hit_block5(self,pos):
         try:
             block_pos5 = self.canvas.coords(self.block.id5)
             List = [block_pos5]
             for i in List:
-                if (pos[0]  >= i[0] and pos[2] <= i[2]):
+                if (pos[0] >= i[0] and pos[2] <= i[2]):
                     if pos[1] >= i[1] and pos[1] <= i[3]:
-                       self.score()
-                       global f
-                       f += 1
-                       return True
+                        self.score()
+                        global f
+                        f += 1
+                        return True
                 if pos[2] >= i[0] and pos[0] <= i[2]:
                     if pos[3] >= i[1] and pos[3] <= i[3]:
                         f += 1
                         return False
         except:
             return 1
-
-
+        
     def hit_block6(self,pos):
         try:
             block_pos6 = self.canvas.coords(self.block.id6)
@@ -174,9 +163,7 @@ class Ball:
                         return False
         except:
             return 1
-
-
-
+        
     def hit_paddle(self,pos):
         paddle_pos = self.canvas.coords(self.paddle.id)
         if pos[2] >= paddle_pos[0] and pos[0] <= paddle_pos[2]:
@@ -186,96 +173,78 @@ class Ball:
                 self.score()
                 return True
         return False
+    
     def draw(self):
         global win
         self.canvas.move(self.id,self.x,self.y)
         pos = self.canvas.coords(self.id)
         if pos[1] <= 0:
             self.y = 3
-
-#####################################################################
-
+        #####################################################################
         if self.hit_block(pos) == True:
             self.y = 3
-
             canvas.itemconfig(self.block.id, fill = "yellow")
-
             global a
-            if  a == 2:
+            if a == 2:
                 canvas.delete(self.block.id)
                 win += 1
-##################################################################
-
+        ##################################################################
         if self.hit_block1(pos) == True:
             self.y = 3
-
             canvas.itemconfig(self.block.id1, fill = "yellow")
-
             global b
-            if  b == 2:
+            if b == 2:
                 canvas.delete(self.block.id1)
                 win += 1
-
-#########################################################
-
+        #########################################################
         if self.hit_block2(pos) == True:
             self.y = 3
-
             canvas.itemconfig(self.block.id2, fill = "yellow")
-
             global c
             if c == 2:
                 canvas.delete(self.block.id2)
                 win += 1
-
-#####################################################################
+        #####################################################################
         if self.hit_block3(pos) == True:
             self.y = 3
             canvas.itemconfig(self.block.id3, fill = "yellow")
-
             global d
             if d == 2:
                 canvas.delete(self.block.id3)
                 win += 1
-
-
-##################################################################
+        ##################################################################
         if self.hit_block4(pos) == True:
             self.y = 3
             canvas.itemconfig(self.block.id4, fill = "yellow")
-
             global e
             if e == 3:
                 canvas.delete(self.block.id4)
                 win += 1
-#######################################################################
+        ######################################################################
+        #
         global f
         if f == 4:
             canvas.delete(self.block.id5)
             win += 1
         elif self.hit_block5(pos) == True and f <= 2:
-             self.y = 3
-             canvas.itemconfig(self.block.id5, fill = "yellow")
+            self.y = 3
+            canvas.itemconfig(self.block.id5, fill = "yellow")
         elif self.hit_block5(pos) == False and f <= 2:
-             self.y = -3
-             canvas.itemconfig(self.block.id5, fill = "yellow")
-
-
-
-#############################################################################
+            self.y = -3
+            canvas.itemconfig(self.block.id5, fill = "yellow")
+        ######################################################################
+        #######
         global g
         if g == 4:
             canvas.delete(self.block.id6)
             win += 1
         elif self.hit_block6(pos) == True and g <= 2:
-             self.y = 3
-             canvas.itemconfig(self.block.id6, fill = "yellow")
+            self.y = 3
+            canvas.itemconfig(self.block.id6, fill = "yellow")
         elif self.hit_block6(pos) == False and g <= 2:
-             self.y = -3
-             canvas.itemconfig(self.block.id6, fill = "yellow")
-
-
-
+            self.y = -3
+            canvas.itemconfig(self.block.id6, fill = "yellow")
+            
         if pos[3] >= self.canvas_height:
             self.hit_bottom = True
         if pos[1] <= 0:
@@ -287,8 +256,7 @@ class Ball:
             self.x = 3
         if pos[2] >= self.canvas_width:
             self.x = -3
-
-
+            
 class Block:
     def __init__(self,canvas,color):
         self.canvas = canvas
@@ -300,6 +268,7 @@ class Block:
         self.id5 = canvas.create_rectangle(100,150,200,160,fill=color)
         self.id6 = canvas.create_rectangle(350,150,450,160,fill=color)
         self.x = 0
+        
 class Paddle:
     def __init__(self,canvas,color):
         self.canvas = canvas
@@ -311,7 +280,7 @@ class Paddle:
         self.canvas.bind_all("<KeyPress-Left>", self.turn_left)
         self.canvas.bind_all("<KeyPress-Right>", self.turn_right)
         self.canvas.bind_all("<Button-1>", self.start_game)
-
+        
     def draw(self):
         self.canvas.move(self.id, self.x, 0)
         pos = self.canvas.coords(self.id)
@@ -319,48 +288,45 @@ class Paddle:
             self.x = 0
         elif pos[2] >= self.canvas_width:
             self.x = 0
+            
     def turn_left(self, evt):
         pos = self.canvas.coords(self.id)
         if pos[0] >= 0:
             self.x = -3
+            
     def turn_right(self, evt):
         pos = self.canvas.coords(self.id)
         if pos[2] <= self.canvas_width:
             self.x = 3
+            
     def start_game(self,evt):
         self.started = True
-
+        
 paddle = Paddle(canvas, "blue")
 block = Block(canvas,"green")
 ball = Ball(canvas, paddle, block, 'red')
-
-
+        
 while 1:
     print (win)
     print(a,b,c,d,e,f,g)
     print(ball.canvas_width)
-
     if ball.hit_bottom == False and paddle.started == True:
-       ball.draw()
-       paddle.draw()
+        ball.draw()
+        paddle.draw()
     if ball.hit_bottom == True:
         time.sleep(1)
         canvas.create_text(270,200, text = "GAME OVER" , font = 28, fill = 'white')
-        canvas.create_text(270,250, text = " Score = " + str(counter), font = 28, fill = 'white')
-
+        canvas.create_text(270,250, text = " Score = " + str(counter), font = 28, fill =
+        'white')
     if (a + b + c + d + e + f + g) > 18:
         time.sleep(1)
         ball.y = 0
         ball.x = 0
         paddle.x = 0
         canvas.create_text(270,200, text = "YOU WIN!" , font = 28, fill="white")
-        canvas.create_text(270,250, text = " Score = " + str(counter), font = 28, fill = "white")
-
-
-
-
+        canvas.create_text(270,250, text = " Score = " + str(counter), font = 28, fill =
+        "white")
     tk.update_idletasks()
     tk.update()
     time.sleep(0.01)
-
 mainloop()
