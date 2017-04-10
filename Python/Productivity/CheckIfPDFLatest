@@ -1,0 +1,47 @@
+import os
+import time
+
+srcPath=input("Please specify the folder in which the files are in:\n").strip()
+fileList=os.listdir(srcPath)
+
+def getPdfList(fileList):
+    pdf_list=[]
+    for item in fileList:
+        if item.endswith(".PDF"):
+            if item[13:17]=="0000":
+                pass
+            elif item[0:3]=="P00":
+                pdf_list.append(item)
+    return(pdf_list)
+
+def CheckIfPDFLatest(src_path,pdf_list):
+    ToUpdateList=[]
+    for item in pdf_list:
+        PDFstatinfo=os.stat(src_path+os.path.sep+item)
+        SLDPRTstatinfo=os.stat(src_path+os.path.sep+item.rstrip(".PDF")+\
+                               ".SLDPRT")
+        if PDFstatinfo.st_ctime > SLDPRTstatinfo.st_ctime:
+            pass
+        else:
+            ToUpdateList.append(item)
+    if len(ToUpdateList):
+        return(ToUpdateList)
+    else:
+        return(None)
+
+def WriteRst2File(src_path,ToUpdateList):
+    timestamp=str(time.localtime(time.time())[3])+\
+           '-'+str(time.localtime(time.time())[4])+\
+           '-'+str(time.localtime(time.time())[5])
+    for item in ToUpdateList:
+        with open(src_path+os.path.sep+"ToUpdate"+timestamp+".txt",w) as f:
+            f.writeline(item)
+    print('Successfully wrote need to update list to ToUpdate%s.txt!\n'\
+          %timestamp)
+
+PdfList=getPdfList(fileList)
+if CheckIfPDFLatest(srcPath,PdfList):
+    ToUpdateList=CheckIfPDFLatest(srcPath,PdfList)
+    WriteRst2File(srcPath,ToUpdateList)
+else:
+    print("All PDF files are up to date!")
