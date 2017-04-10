@@ -8,16 +8,14 @@ timestamp=timestamp=str(time.localtime(time.time())[3])+\
 srcDir =input("Please provide the Source File Folder:\n").strip()
 dstDir=os.path.join(srcDir,"Result"+"_"+timestamp)
 os.mkdir(os.path.join(srcDir,"Result"+"_"+timestamp))
-extension=".sldprt"
+extension=".PDF"
 ListFile=os.path.join(srcDir,"ToMove.txt")
 
 #Read "ToMove.txt" from source Folder!
 def readList(ListFile):
    with open(ListFile) as f:
       fileNames=f.readlines()
-   fileList=[]
-   for item in fileNames:
-      fileList.append(item.strip("\n"))
+   fileList=[item.strip("\n") for item in fileNames]
    return fileList
 
 def MovePdf2RstFolder(fileList,srcDir,dstDir):
